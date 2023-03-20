@@ -1,8 +1,5 @@
-import { useDispatch, useSelector } from 'react-redux';
-import toast from 'react-hot-toast';
-import { selectContacts, selectOperation } from 'redux/contacts/contactSelectors';
-import { addContact } from 'redux/contacts/ContactOperations';
-import { Loader } from 'components/Loader/Loader';
+import { useDispatch } from 'react-redux';
+import { logIn } from 'redux/auth/operations';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -10,38 +7,25 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import Avatar from '@mui/material/Avatar';
+import PersonIcon from '@mui/icons-material/Person';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 const theme = createTheme();
 
-
-export default function ContactForm() {
-  const contacts = useSelector(selectContacts);
-  const operation = useSelector(selectOperation);
-
+const LoginForm = () => {
   const dispatch = useDispatch();
 
   const handleSubmit = async e => {
     e.preventDefault();
-    const form = e.target;
-    const { name, number } = form;
+    const form = e.currentTarget;
 
-    let value = {
-      name: name.value,
-      number: number.value,
+    let credentials = {
+      email: form.elements.email.value,
+      password: form.elements.password.value,
     };
+    const { error } = await dispatch(logIn(credentials));
 
-    if (
-      contacts.some(
-        contact => contact.name.toLowerCase() === name.value.toLowerCase()
-      )
-    ) {
-      return toast(`${name.value} is already in contacts.`, {
-        duration: 3000,
-      });
-    }
-
-    const { error } = await dispatch(addContact(value));
     if (!error) {
       form.reset();
     }
@@ -56,14 +40,17 @@ export default function ContactForm() {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            padding: '20px',
           }}
         >
-          <Typography component="h1" variant="30px" sx={{ color: 'bleack' }}>
-            New Contact
+          <Avatar sx={{ m: 1, bgcolor: 'blueviolet' }}>
+            <PersonIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Sign in
           </Typography>
           <Box
             component="form"
+            noValidate
             onSubmit={handleSubmit}
             sx={{
               mt: 3,
@@ -83,11 +70,11 @@ export default function ContactForm() {
                 <TextField
                   required
                   fullWidth
-                  id="name"
-                  label="Name contact"
-                  name="name"
-                  type="text"
-                  autoComplete="name"
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  type="email"
+                  autoComplete="email"
                   autoFocus
                 />
               </Grid>
@@ -95,11 +82,11 @@ export default function ContactForm() {
                 <TextField
                   required
                   fullWidth
-                  id="number"
-                  name="number"
-                  label="Number"
-                  type="tel"
-                  autoComplete="new-tel"
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  autoComplete="new-password"
                 />
               </Grid>
             </Grid>
@@ -107,15 +94,8 @@ export default function ContactForm() {
               type="submit"
               fullWidth
               variant="contained"
-              disabled={operation === 'add'}
               sx={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '20px',
-                mt: 3,
-                mb: 2,
-                bgcolor: 'blueviolet',
+                mt: 3, mb: 2, bgcolor: 'blueviolet',
                 '&:hover': {
                   backgroundColor: '#4B0082',
                 },
@@ -124,27 +104,12 @@ export default function ContactForm() {
                 }
               }}
             >
-              {operation === 'add' ? (
-                <>
-                  <Loader
-                    color={'blueviolet'}
-                    size={20}
-                  />
-                  <span>Add ... </span>
-                </>
-              ) : (
-                'Add contact'
-              )}
+              Sign in
             </Button>
           </Box>
         </Box>
-       
       </Container>
-      </ThemeProvider>
+    </ThemeProvider>
   );
-}
-
-
-
-
-
+};
+export default LoginForm;

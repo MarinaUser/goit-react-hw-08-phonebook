@@ -1,47 +1,33 @@
-import { useDispatch, useSelector } from 'react-redux';
-import toast from 'react-hot-toast';
-import { selectContacts, selectOperation } from 'redux/contacts/contactSelectors';
-import { addContact } from 'redux/contacts/ContactOperations';
-import { Loader } from 'components/Loader/Loader';
+import { useDispatch } from 'react-redux';
+import { register } from 'redux/auth/operations';
+
+import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
+import PermContactCalendarIcon from '@mui/icons-material/PermContactCalendar';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 const theme = createTheme();
 
-
-export default function ContactForm() {
-  const contacts = useSelector(selectContacts);
-  const operation = useSelector(selectOperation);
-
+const RegisterForm = () => {
   const dispatch = useDispatch();
 
   const handleSubmit = async e => {
     e.preventDefault();
-    const form = e.target;
-    const { name, number } = form;
-
-    let value = {
-      name: name.value,
-      number: number.value,
+    const form = e.currentTarget;
+    const info = {
+      name: form.elements.name.value,
+      email: form.elements.email.value,
+      password: form.elements.password.value,
     };
 
-    if (
-      contacts.some(
-        contact => contact.name.toLowerCase() === name.value.toLowerCase()
-      )
-    ) {
-      return toast(`${name.value} is already in contacts.`, {
-        duration: 3000,
-      });
-    }
-
-    const { error } = await dispatch(addContact(value));
+    const { error } = await dispatch(register(info));
+    console.log(error);
     if (!error) {
       form.reset();
     }
@@ -56,14 +42,17 @@ export default function ContactForm() {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            padding: '20px',
           }}
         >
-          <Typography component="h1" variant="30px" sx={{ color: 'bleack' }}>
-            New Contact
+          <Avatar sx={{ m: 1, bgcolor: 'blueviolet' }}>
+            <PermContactCalendarIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Sign up
           </Typography>
           <Box
             component="form"
+            noValidate
             onSubmit={handleSubmit}
             sx={{
               mt: 3,
@@ -81,25 +70,37 @@ export default function ContactForm() {
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
+                  autoComplete="given-name"
+                  name="name"
                   required
                   fullWidth
                   id="name"
-                  label="Name contact"
-                  name="name"
+                  label="Name"
                   type="text"
-                  autoComplete="name"
                   autoFocus
+                />
+              </Grid>
+
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  type="email"
+                  autoComplete="email"
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
                   required
                   fullWidth
-                  id="number"
-                  name="number"
-                  label="Number"
-                  type="tel"
-                  autoComplete="new-tel"
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  autoComplete="new-password"
                 />
               </Grid>
             </Grid>
@@ -107,15 +108,8 @@ export default function ContactForm() {
               type="submit"
               fullWidth
               variant="contained"
-              disabled={operation === 'add'}
               sx={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '20px',
-                mt: 3,
-                mb: 2,
-                bgcolor: 'blueviolet',
+                mt: 3, mb: 2, bgcolor: 'blueviolet',
                 '&:hover': {
                   backgroundColor: '#4B0082',
                 },
@@ -123,28 +117,14 @@ export default function ContactForm() {
                   backgroundColor: '#4B0082',
                 }
               }}
+              
             >
-              {operation === 'add' ? (
-                <>
-                  <Loader
-                    color={'blueviolet'}
-                    size={20}
-                  />
-                  <span>Add ... </span>
-                </>
-              ) : (
-                'Add contact'
-              )}
+              Sign up
             </Button>
           </Box>
         </Box>
-       
       </Container>
-      </ThemeProvider>
+    </ThemeProvider>
   );
-}
-
-
-
-
-
+};
+export default RegisterForm;

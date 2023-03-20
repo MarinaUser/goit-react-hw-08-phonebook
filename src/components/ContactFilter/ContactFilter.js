@@ -1,25 +1,38 @@
-import { useSelector, useDispatch } from 'react-redux/es/exports';
+import { useDispatch, useSelector } from 'react-redux';
 import { setFilter } from 'redux/contacts/filtersSlice';
-import { selectValueFilter } from 'redux/contacts/contactSelectors'
-
-// import { FilterLabel, FilterInput } from './Filter.styled';
-
+import { selectValueFilter } from 'redux/contacts/contactSelectors';
+import TextField from '@mui/material/TextField';
+import Box from '@mui/material/Box';
 
 export const Filter = () => {
-  const dispatch = useDispatch(setFilter);
   const filter = useSelector(selectValueFilter);
+  const dispatch = useDispatch(setFilter);
 
+  const handleFilterChange = e => {
+    dispatch(setFilter(e.currentTarget.value));
+  };
   return (
-    <div>
-      <label>
-        Find contacts by name
-        <input
-          name="filter"
-          value={filter}
-          onChange={evt => dispatch(setFilter(evt.target.value))}
-          type="text"
-        />
-      </label>
-    </div>
+    <Box
+     sx={{
+              '& label.Mui-focused': {
+                color: 'blueviolet',
+              },
+
+              '& .MuiOutlinedInput-root': {
+                '&.Mui-focused fieldset': {
+                  borderColor: 'blueviolet',
+                },
+              },
+            }}>
+    <TextField
+      id="logFilter"
+      label="Find contact by name"
+      name="filter"
+      value={filter}
+      onChange={handleFilterChange}
+      sx={{ width: 350, marginBottom: 3 }}
+      size="small"
+      />
+      </Box>
   );
 };
