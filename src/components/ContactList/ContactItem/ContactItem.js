@@ -30,7 +30,7 @@ export const ContactItem = ({ contact: { id, name, number } }) => {
           {operation === id ? (
             <Loader
               loading={operation === id}
-              color={'#003b8e'}
+              color={'blueviolet'}
               size={18}
             />
           ) : (

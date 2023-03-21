@@ -2,7 +2,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { selectContactsCount } from 'redux/contacts/contactSelectors';
 import { logOut } from 'redux/auth/operations';
 import { useAuth } from 'hooks/useAuth';
+import LogoutIcon from '@mui/icons-material/Logout';
 import { Wrapper, Username, Button } from './UserMenu.styled';
+
 
 const UserMenu = () => {
   const dispatch = useDispatch();
@@ -17,7 +19,7 @@ const UserMenu = () => {
       </Username>
 
       <Button type="button" onClick={handleLogOut}>
-        Logout
+        <LogoutIcon/>
       </Button>
     </Wrapper>
   );

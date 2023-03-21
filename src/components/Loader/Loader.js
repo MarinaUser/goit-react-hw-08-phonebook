@@ -1,9 +1,9 @@
 import { ThreeCircles } from 'react-loader-spinner';
-// import { Container } from './Loader.styled';
+import { Container } from './Loader.styled';
 
 export const Loader = () => {
     return (
-        <div>
+        <Container>
         <ThreeCircles
   height="100"
   width="100"
@@ -12,9 +12,9 @@ export const Loader = () => {
   wrapperClass=""
   visible={true}
   ariaLabel="three-circles-rotating"
-  outerCircleColor="lightsalmon"
-  innerCircleColor="lightsalmon"
-  middleCircleColor="lightsalmon"
+  outerCircleColor="blueviolet"
+  innerCircleColor="blueviolet"
+  middleCircleColor="blueviolet"
     />
-        </div>)
+        </Container>)
  }

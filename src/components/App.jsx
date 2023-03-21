@@ -1,4 +1,4 @@
-import { lazy, useEffect } from 'react';
+import { lazy, useEffect, Suspense  } from 'react';
 import { useDispatch } from 'react-redux';
 import { Route, Routes, Navigate } from 'react-router-dom';
 
@@ -9,6 +9,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { PrivateRoute } from './PrivateRoute/PrivateRoute';
 import { RestrictedRoute } from './RestrictedRoute/RestrictedRoute';
 import Layout from 'components/Loyout/Loyout';
+import {Loader} from './Loader/Loader';
 
 import { refreshUser } from 'redux/auth/operations';
 import { useAuth } from 'hooks';
@@ -28,6 +29,7 @@ export const App = () => {
 
   return (
     <>
+      <Suspense fallback={<Loader />}>
       {isRefreshing ? (
         <Backdrop
           sx={{ color: 'fff', zIndex: theme => theme.zIndex.drawer + 1 }}
@@ -70,8 +72,10 @@ export const App = () => {
           </Route>
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
-      )}
-    </>
+        )}
+        </Suspense>
+      </>
+      
   );
 };
 
