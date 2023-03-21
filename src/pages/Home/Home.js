@@ -11,12 +11,14 @@ export default function Home() {
     <Container>
       
       <IoIosBookmarks size={70} />
-      <Title>Wellcome to your Phonebook,</Title>
-      <SubTitle>
+      <Title>Wellcome to your Phonebook,
+        <SubTitle>
         {isLoggedIn
           ? `${name}!`
           : 'to enter, please log in or register'}
       </SubTitle>
+      </Title>
+
     </Container>
   );
 }
