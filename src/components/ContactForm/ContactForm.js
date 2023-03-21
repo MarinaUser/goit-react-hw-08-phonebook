@@ -20,8 +20,9 @@ export default function ContactForm() {
   const operation = useSelector(selectOperation);
 
   const dispatch = useDispatch();
+  
 
-  const handleSubmit = async e => {
+  const handleSubmit =  e => {
     e.preventDefault();
     const form = e.target;
     const { name, number } = form;
@@ -41,10 +42,9 @@ export default function ContactForm() {
       });
     }
 
-    const { error } = await dispatch(addContact(value));
-    if (!error) {
-      form.reset();
-    }
+     dispatch(addContact(value));
+     form.reset();
+    
   };
 
   return (
