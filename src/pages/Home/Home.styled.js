@@ -1,6 +1,10 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+import { bounceInDown } from 'react-animations';
+
+const bounceInDownAnimation = keyframes`${bounceInDown}`;
 
 export const Container = styled.div`
+  animation: 1s ${bounceInDownAnimation};
   min-height: calc(100vh-50px);
   display: flex;
   align-items: center;
@@ -11,6 +15,7 @@ export const Container = styled.div`
     color: blueviolet;
   }
 `;
+
 
 export const Title = styled.h1`
   text-align: center;
