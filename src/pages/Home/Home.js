@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import { selectIsLoggedIn, selectUser } from 'redux/contacts/contactSelectors';
-import { Container, Title, SubTitle } from './Home.styled';
-import { IoIosBookmarks } from "react-icons/io";
+import { Container, Title, SubTitle, Image } from './Home.styled';
+import phoneBook from 'utils/phoneBook.jpg';
 
 export default function Home() {
   const isLoggedIn = useSelector(selectIsLoggedIn);
@@ -9,8 +9,7 @@ export default function Home() {
 
   return (
     <Container>
-      
-      <IoIosBookmarks size={70} />
+      <Image src={phoneBook} alt="phonebook"/>
       <Title>Wellcome to your Phonebook,
         <SubTitle>
         {isLoggedIn

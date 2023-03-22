@@ -5,8 +5,8 @@ export const Loader = () => {
     return (
         <Container>
         <ThreeCircles
-  height="100"
-  width="100"
+  height="60"
+  width="60"
   color="#4fa94d"
   wrapperStyle={{}}
   wrapperClass=""

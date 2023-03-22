@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import toast from 'react-hot-toast';
-import { selectContacts, selectOperation } from 'redux/contacts/contactSelectors';
+import { selectContacts, selectIsLoading, selectOperation } from 'redux/contacts/contactSelectors';
 import { addContact } from 'redux/contacts/ContactOperations';
 import { Loader } from 'components/Loader/Loader';
 import Button from '@mui/material/Button';
@@ -18,6 +18,7 @@ const theme = createTheme();
 export default function ContactForm() {
   const contacts = useSelector(selectContacts);
   const operation = useSelector(selectOperation);
+  const isLoading = useSelector(selectIsLoading);
 
   const dispatch = useDispatch();
   
@@ -49,6 +50,7 @@ export default function ContactForm() {
 
   return (
     <ThemeProvider theme={theme}>
+      {isLoading && <Loader />}
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box

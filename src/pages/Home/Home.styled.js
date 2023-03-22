@@ -16,6 +16,14 @@ export const Container = styled.div`
   }
 `;
 
+export const Image = styled.img `
+  width:140px;
+  height:120px;
+  display: flex;
+  align-items: center;
+  justify-content: center; 
+  margin-top: 30px;
+`;
 
 export const Title = styled.h1`
   text-align: center;

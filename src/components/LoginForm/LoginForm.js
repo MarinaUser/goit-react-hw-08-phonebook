@@ -16,19 +16,17 @@ const theme = createTheme();
 const LoginForm = () => {
   const dispatch = useDispatch();
 
-  const handleSubmit = async e => {
+  const handleSubmit =  e => {
     e.preventDefault();
     const form = e.currentTarget;
 
-    let credentials = {
+    let info = {
       email: form.elements.email.value,
       password: form.elements.password.value,
     };
-    const { error } = await dispatch(logIn(credentials));
-
-    if (!error) {
+     dispatch(logIn(info));
       form.reset();
-    }
+    
   };
 
   return (

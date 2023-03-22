@@ -17,7 +17,7 @@ const theme = createTheme();
 const RegisterForm = () => {
   const dispatch = useDispatch();
 
-  const handleSubmit = async e => {
+  const handleSubmit =  e => {
     e.preventDefault();
     const form = e.currentTarget;
     const info = {
@@ -26,11 +26,9 @@ const RegisterForm = () => {
       password: form.elements.password.value,
     };
 
-    const { error } = await dispatch(register(info));
-    console.log(error);
-    if (!error) {
+    dispatch(register(info));
       form.reset();
-    }
+    
   };
 
   return (
